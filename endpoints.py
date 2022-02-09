@@ -108,9 +108,12 @@ def password_reset_request():
     user.password_reset_token = token
     db.session.commit()
 
-    # TODO: send user an email containing the authorized link (with the generated token)
-    # like so: http://localhost:5000/password-reset/**Token goes here**
+    # TODO: mailt küldeni a felhasználónak ami tartalmaz egy ellenőrzött linket (egy generált tokennel)
+    # például: http://localhost:5000/password-reset/**Ide jön a token**
     print(f"http://localhost:5000/password-reset/{token}")
+
+
+    # mailgan e-mail küldés
 
     return render_template("index.html")
 
@@ -124,7 +127,7 @@ def password_reset(token: str):
 
     new_password = utils.random_password()
 
-    # TODO: send new password in email
+    # TODO: új jelszót küldeni e-mailben
     print("New password:", new_password)
 
     new_password_hash = utils.salted_hash(new_password, user.password_salt)
