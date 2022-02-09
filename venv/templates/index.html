@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login app</title>
+    <style>
+      label {
+        margin-bottom: 0.25rem;
+      }
+
+      input {
+        margin-bottom: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Register form -->
+    <h1>Új fiók létrehozása</h1>
+    <form
+      style="display: flex; flex-direction: column; width: 10rem"
+      action="/register"
+      method="post"
+    >
+      <label for="email-input-register">E-mail cím</label>
+      <input
+        name="email"
+        id="email-input-register"
+        type="email"
+        placeholder="E-mail cím"
+        required
+      />
+
+      <label for="username-input-register">User név</label>
+      <input
+        name="username"
+        id="username-input-register"
+        type="text"
+        placeholder="User név"
+        required
+      />
+
+      <label for="last-name-input-register">Vezetéknév</label>
+      <input
+        name="last_name"
+        id="first-name-input-register"
+        type="text"
+        placeholder="Vezetéknév"
+        required
+      />
+
+      <label for="first-name-input-register">Keresztnév</label>
+      <input
+        name="first_name"
+        id="first-name-input-register"
+        type="text"
+        placeholder="Keresztnév"
+        required
+      />
+
+      <label for="password-input-register">Jelszó</label>
+      <input
+        name="password"
+        id="password-input-register"
+        type="password"
+        placeholder="••••••••••"
+        required
+      />
+
+      <input type="submit" value="Regisztráció" />
+    </form>
+
+    <!-- Login form -->
+    <h1>Bejelentkezés</h1>
+    <form style="display: flex; flex-direction: column; width: 10rem" action="/login" method="post">
+      <label for="email-input-login">E-mail cím / user név</label>
+      <input
+        name="email"
+        id="email-input-login"
+        type="text"
+        placeholder="E-mail cím / user név"
+        required
+      />
+      <label for="password-input-login">Jelszó</label>
+      <input
+        name="password"
+        id="password-input-login"
+        type="password"
+        placeholder="••••••••••"
+        required
+      />
+      <input type="submit" value="Bejelentkezés" />
+    </form>
+
+    <!-- Password reset form -->
+    <h1>Elfejeltett jelszó</h1>
+    <form
+      style="display: flex; flex-direction: column; width: 10rem"
+      action="/password-reset-request"
+      method="post"
+    >
+      <label for="email-input-password-reset">E-mail cím</label>
+      <input
+        name="email"
+        id="email-input-register"
+        type="email"
+        placeholder="E-mail cím"
+        required
+      />
+      <input type="submit" value="Jelszó visszaállítása" />
+    </form>
+  </body>
+</html>
