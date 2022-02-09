@@ -1,4 +1,5 @@
-from flask import request, make_response, render_template, redirect
+from operator import methodcaller
+from flask import jsonify, request, make_response, render_template, redirect
 from startup import app, db
 from models import User, Session, Todo
 from flask import abort
@@ -191,8 +192,9 @@ def get_todos():
     )
 
 
-@app.route("/data", methods=["GET"])
-def data():
-    session, user = utils.auth_session()
-
-    return success_response("gya")
+@app.route('/test', methods=['GET', 'POST'])
+def testfn():
+    #GET reqquest
+    if request.method == 'GET':
+        message = {'greeting': 'Helló from flask!'}
+        return jsonify(message)

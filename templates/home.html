@@ -17,6 +17,15 @@
   </head>
   <body>
     <h1>Üdv újra!</h1>
+    <script>
+      fetch('/test')
+        .then(function (response) {
+          return response.json();
+        }).then(function (text) {
+          console.log('GET response:');
+          console.log(text.greeting);
+        });
+    </script>
     <a href="/logout">Kijelentkezés</a>
   </body>
 </html>
