@@ -1,7 +1,7 @@
 # Fejlesztői szerver beállítása
 
 - `Windowson`
-    - `Importáld a project-1.sql file-t`
+    - `Importáld a vizsgaremek.sql file-t`
     - `Cloneozd ezt a repot`
     - `A config.py-ben szedd ki a kommentet a DB_URI = 'mysql://root@localhost/project' elől, és->`
     - `kommenteld ki az alatta lévő DB_URI elérési utat`
@@ -17,7 +17,7 @@
         - `flask run / flask run --reload`
     
 - `Linuxon`
-    - `Importáld a project-1.sql file-t`
+    - `Importáld a vizsgaremek.sql file-t`
     - `Cloneozd ezt a repot`
     - `A config.py-ben szedd ki a kommentet a DB_URI = 'mysql://root@localhost/project' elől, és->`
     - `kommenteld ki az alatta lévő DB_URI elérési utat`
