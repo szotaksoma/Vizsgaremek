@@ -1,3 +1,4 @@
+from urllib import response
 from flask import request, make_response, render_template
 from startup import app, db
 from models import User, Session, Todo
@@ -29,7 +30,7 @@ def json_register():
     password_hash = utils.salted_hash(password, salt)
 
     email_verification_token = utils.random_token()
-    print(f"http://localhost:5000/verify-email{email_verification_token}")
+    print(f"http://localhost:5000/api/verify-email{email_verification_token}")
 
     user = User(
         register_date=int(time()),
@@ -115,6 +116,53 @@ def json_login():
         max_age=cookie_max_age,
         secure=False,
     )
+
+    return response
+
+
+@app.route("/api/password-reset-request", methods=["POST"])
+def json_password_reset_request():
+
+    email = utils.validate_json("email")
+
+    user: User = User.query.filter_by(email=email).first()
+    if user is None:
+        abort(401)
+     
+
+    token = utils.random_token()
+    user.password_reset_token = token
+    db.session.commit()
+     
+
+    # TODO: send user an email containing the authorized link (with the generated token)
+    # like so: http://localhost:5000/api/password-reset/**Token goes here**
+    print(f"http://localhost:5000/api/password-reset/{token}")
+
+    return success_response("password reset sent to" + user.email)
+
+
+
+@app.route("/api/password-reset/<string:token>", methods=["GET"])
+def json_password_reset(token: str):
+
+    user: User = User.query.filter_by(password_reset_token=token).first()
+    if user is None:
+        abort(401)
+
+    new_password = utils.random_password()
+
+    # TODO: send new password in email
+    print("New password:", new_password)
+
+    new_password_hash = utils.salted_hash(new_password, user.password_salt)
+
+    response = make_response(
+        success_response("password reset successfully")
+    )      
+
+    user.password_hash = new_password_hash
+    db.session.commit()
 
     return response
 
