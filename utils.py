@@ -50,3 +50,13 @@ def auth_session() -> "tuple[Session, User]":
 
     # valid session token
     return session, session.user
+
+
+def validate_json(*keys, json=None) -> "tuple":
+    if json is None:
+        json = request.get_json()
+
+    if json is None or any([key not in json for key in keys]):
+        abort(400, "invalid body format")
+
+    return (json[key] for key in keys)

@@ -14,6 +14,7 @@ class User(db.Model):
     first_name = db.Column(VARCHAR(128), nullable=False)
     last_name = db.Column(VARCHAR(128), nullable=False)
     password_reset_token = db.Column(CHAR(64), nullable=True)
+    email_verification_token = db.Column(CHAR(64), nullable=True)
 
 
 class Mission(db.Model):

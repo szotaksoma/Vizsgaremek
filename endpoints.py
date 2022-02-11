@@ -1,5 +1,4 @@
-from operator import methodcaller
-from flask import jsonify, request, make_response, render_template, redirect
+from flask import request, make_response, render_template, redirect
 from startup import app, db
 from models import User, Session, Todo
 from flask import abort
@@ -109,12 +108,9 @@ def password_reset_request():
     user.password_reset_token = token
     db.session.commit()
 
-    # TODO: mailt küldeni a felhasználónak ami tartalmaz egy ellenőrzött linket (egy generált tokennel)
-    # például: http://localhost:5000/password-reset/**Ide jön a token**
+    # TODO: send user an email containing the authorized link (with the generated token)
+    # like so: http://localhost:5000/password-reset/**Token goes here**
     print(f"http://localhost:5000/password-reset/{token}")
-
-
-    # mailgan e-mail küldés
 
     return render_template("index.html")
 
@@ -128,7 +124,7 @@ def password_reset(token: str):
 
     new_password = utils.random_password()
 
-    # TODO: új jelszót küldeni e-mailben
+    # TODO: send new password in email
     print("New password:", new_password)
 
     new_password_hash = utils.salted_hash(new_password, user.password_salt)
@@ -190,11 +186,3 @@ def get_todos():
             for t in todos
         ]
     )
-
-
-@app.route('/test', methods=['GET', 'POST'])
-def testfn():
-    #GET reqquest
-    if request.method == 'GET':
-        message = {'greeting': 'Helló from flask!'}
-        return jsonify(message)
