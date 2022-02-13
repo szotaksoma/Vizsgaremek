@@ -125,10 +125,10 @@ def json_login():
 @app.route("/api/password-reset-request", methods=["POST"])
 def json_password_reset_request():
 
-    email = utils.validate_json("email")
+    email, = utils.validate_json("email")
 
-    user: User = User.query.filter_by(email=email).first()
-    print(user)
+    user: User = User.query.filter_by(email = email).first()
+
      
     token = utils.random_token()
     user.password_reset_token = token
@@ -139,7 +139,7 @@ def json_password_reset_request():
     # Például: http://localhost:5000/api/password-reset/**Ide jön a token**
     print(f"http://localhost:5000/api/password-reset/{token}")
 
-    return success_response("password reset sent to" + user.email)
+    return success_response("password reset sent to: " + user.email)
 
 
 
@@ -156,15 +156,12 @@ def json_password_reset(token: str):
     print("New password:", new_password)
 
     new_password_hash = utils.salted_hash(new_password, user.password_salt)
-
-    response = make_response(
-        success_response("password reset successfully")
-    )      
+ 
 
     user.password_hash = new_password_hash
     db.session.commit()
 
-    return response
+    return success_response("password reset successfully")
 
 
 @app.route("/api/logout", methods=["GET"])
