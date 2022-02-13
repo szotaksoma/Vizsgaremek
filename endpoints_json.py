@@ -16,12 +16,12 @@ def json_register():
         "email", "username", "password", "firstName", "lastName"
     )
 
-    # Check if email is not yet used
+    # Csekk hogy használatban van-e az e-mail
     existing_user: User = User.query.filter_by(email=email).first()
     if existing_user is not None:
         abort(400, "email already in use")
 
-    # Check if username is not yet used
+    # Csekk hogy használatban van-e a username
     existing_user = User.query.filter_by(username=username).first()
     if existing_user is not None:
         abort(400, "username already in use")
@@ -46,7 +46,7 @@ def json_register():
     db.session.add(user)
     db.session.commit()
 
-    # TODO: send email to user with verification URL using the generated token
+    # TODO: e-mail-t küldeni a felhasználónak megerősítő URL-el, generált tokennel
     # ...
 
     return success_response("successfully registered")
@@ -120,23 +120,23 @@ def json_login():
     return response
 
 
+# A PASS reset funkció még hibaelhárítás alatt van, nem működik!!
+
 @app.route("/api/password-reset-request", methods=["POST"])
 def json_password_reset_request():
 
     email = utils.validate_json("email")
 
     user: User = User.query.filter_by(email=email).first()
-    if user is None:
-        abort(401)
+    print(user)
      
-
     token = utils.random_token()
     user.password_reset_token = token
     db.session.commit()
      
 
-    # TODO: send user an email containing the authorized link (with the generated token)
-    # like so: http://localhost:5000/api/password-reset/**Token goes here**
+    # TODO: E-mailt-t küldeni a felhasználónak, ami tartalmazza az 'Auth' linket (a generált tokennel)
+    # Például: http://localhost:5000/api/password-reset/**Ide jön a token**
     print(f"http://localhost:5000/api/password-reset/{token}")
 
     return success_response("password reset sent to" + user.email)
@@ -152,7 +152,7 @@ def json_password_reset(token: str):
 
     new_password = utils.random_password()
 
-    # TODO: send new password in email
+    # TODO: új jelszót küldeni e-mail-ben
     print("New password:", new_password)
 
     new_password_hash = utils.salted_hash(new_password, user.password_salt)
@@ -184,9 +184,9 @@ def json_logout():
 def json_create_todo():
 
     """
-    Create a single TODO
+    Létrehoz egy TODO-t
 
-    Returns the newly created TODO object
+    Visszaadja az újonnan létrehozott TODO objektumot
     """
 
     session, user = utils.auth_session()
@@ -212,4 +212,4 @@ def json_get_todos():
     session, user = utils.auth_session()
     todos: "list[Todo]" = Todo.query.filter_by(user_id=user.id).all()
     return success_response([todo_shema(t) for t in todos])
-    # Alternatively, use: map(todo_shema, todos)
+    # így is lehet használni: map(todo_shema, todos)
