@@ -12,8 +12,8 @@ import config
 @app.route("/api/register", methods=["POST"])
 def json_register():
 
-    email, username, password, first_name, last_name = utils.validate_json(
-        "email", "username", "password", "firstName", "lastName"
+    email, username, password, first_name, last_name, gender = utils.validate_json(
+        "email", "username", "password", "firstName", "lastName", "gender"
     )
 
     # Csekk hogy használatban van-e az e-mail
@@ -40,6 +40,7 @@ def json_register():
         password_salt=salt,
         first_name=first_name,
         last_name=last_name,
+        gender=gender,
         email_verification_token=email_verification_token,
     )
 
