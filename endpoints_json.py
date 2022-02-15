@@ -4,9 +4,12 @@ from startup import app, db
 from models import User, Session, Todo
 from flask import abort
 import utils
+import requests
 from time import time
 from schemas import success_response, todo_shema
 import config
+
+
 
 
 @app.route("/api/register", methods=["POST"])
