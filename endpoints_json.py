@@ -126,7 +126,6 @@ def json_login():
     return response
 
 
-# A PASS reset funkció még hibaelhárítás alatt van, nem működik!!
 
 @app.route("/api/password-reset-request", methods=["POST"])
 def json_password_reset_request():
@@ -218,17 +217,17 @@ def json_get_todos():
     # így is lehet használni: map(todo_shema, todos)
 
 
-@app.route("/api/password-change", methods=["POST"])
+@app.route("/api/change-data", methods=["POST"])
 def json_change_password():
     session, user = utils.auth_session()
-    new_password, = utils.validate_json("newPassword")
+    new_password, new_username, new_first_name, new_last_name, = utils.validate_json("newPassword", "newUsername", "newFirstName", "newLastName")
 
-    print("New password:", new_password)
+    print("New password:", new_password + "\n New Name:", new_first_name + " " + new_last_name + "\n New Username:", new_username)
 
     new_password_hash = utils.salted_hash(new_password, user.password_salt)
  
     user.password_hash = new_password_hash
     db.session.commit()
 
-    return success_response("password changed successfully")
+    return success_response("data changed successfully")
 
