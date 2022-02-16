@@ -222,6 +222,11 @@ def json_change_password():
     session, user = utils.auth_session()
     new_password, new_username, new_first_name, new_last_name, = utils.validate_json("newPassword", "newUsername", "newFirstName", "newLastName")
 
+    # Csekk hogy használatban van-e a username
+    existing_user = User.query.filter_by(username=new_username).first()
+    if existing_user is not None:
+        abort(400, "a felhasználónév már foglalt")
+
     print("New password:", new_password + "\n New Name:", new_first_name + " " + new_last_name + "\n New Username:", new_username)
 
     new_password_hash = utils.salted_hash(new_password, user.password_salt)
