@@ -1,3 +1,5 @@
+from crypt import methods
+from ctypes import util
 from urllib import response
 from flask import request, make_response, render_template
 from startup import app, db
@@ -214,3 +216,19 @@ def json_get_todos():
     todos: "list[Todo]" = Todo.query.filter_by(user_id=user.id).all()
     return success_response([todo_shema(t) for t in todos])
     # így is lehet használni: map(todo_shema, todos)
+
+
+@app.route("/api/password-change", methods=["POST"])
+def json_change_password():
+    session, user = utils.auth_session()
+    new_password, = utils.validate_json("newPassword")
+
+    print("New password:", new_password)
+
+    new_password_hash = utils.salted_hash(new_password, user.password_salt)
+ 
+    user.password_hash = new_password_hash
+    db.session.commit()
+
+    return success_response("password changed successfully")
+
