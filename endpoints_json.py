@@ -17,6 +17,11 @@ import config
 @app.route("/api/register", methods=["POST"])
 def json_register():
 
+    """
+    Új felhasználó regisztrálása
+    """
+
+
     email, username, password, first_name, last_name, gender = utils.validate_json(
         "email", "username", "password", "firstName", "lastName", "gender"
     )
@@ -60,6 +65,11 @@ def json_register():
 
 @app.route("/api/verify-email", methods=["GET"])
 def json_verify_email():
+
+    """
+    Újonnan regisztrált email-cím megerősítése
+    """
+
     email_verification_token = request.args.get("token")
     user: User = User.query.filter_by(
         email_verification_token=email_verification_token
@@ -93,7 +103,12 @@ def json_verify_email():
 
 @app.route("/api/login", methods=["POST"])
 def json_login():
-    email_or_username, password = utils.validate_json("email", "password")
+
+    """
+    Felhasználó bejelentkeztetése
+    """
+
+    email_or_username, password = utils.validate_json("email_or_username", "password")
 
     user: User = User.query.filter(
         (User.email == email_or_username) | (User.username == email_or_username)
@@ -126,9 +141,12 @@ def json_login():
     return response
 
 
-
 @app.route("/api/password-reset-request", methods=["POST"])
 def json_password_reset_request():
+
+    """
+    Új jelszó kérés elfelejtett jelszó esetén
+    """
 
     email, = utils.validate_json("email")
 
@@ -151,6 +169,10 @@ def json_password_reset_request():
 @app.route("/api/password-reset/<string:token>", methods=["GET"])
 def json_password_reset(token: str):
 
+    """
+    Újonnan generált jelszó kiküldése e-mail-re
+    """
+
     user: User = User.query.filter_by(password_reset_token=token).first()
     if user is None:
         abort(401)
@@ -171,6 +193,11 @@ def json_password_reset(token: str):
 
 @app.route("/api/logout", methods=["GET"])
 def json_logout():
+
+    """
+    Kijelentkezteti a Felhasználót
+    """
+
     session, user = utils.auth_session()
 
     db.session.delete(session)
@@ -187,7 +214,6 @@ def json_create_todo():
 
     """
     Létrehoz egy TODO-t
-
     Visszaadja az újonnan létrehozott TODO objektumot
     """
 
@@ -211,6 +237,11 @@ def json_create_todo():
 
 @app.route("/api/todo", methods=["GET"])
 def json_get_todos():
+
+    """
+    Visszaadja a felhasználó összes TODO objektumát
+    """
+
     session, user = utils.auth_session()
     todos: "list[Todo]" = Todo.query.filter_by(user_id=user.id).all()
     return success_response([todo_shema(t) for t in todos])
@@ -218,7 +249,7 @@ def json_get_todos():
 
 
 
-
+# User adatokkal kapcsolatos endpoint-ok
 
 @app.route("/api/profile-data", methods=["GET"])
 def json_profile_data():
@@ -236,24 +267,66 @@ def json_profile_data():
 
     return success_response(user_schema(user_element))
 
-    
 
-@app.route("/api/change-data", methods=["PATCH"])
+
+@app.route("/api/change-password", methods=["PATCH"])
 def json_change_password():
+
+    """
+    Bejelentkezett felhasználó jelszavának módosítása
+    """
+
     session, user = utils.auth_session()
-    new_password, new_username, new_first_name, new_last_name, = utils.validate_json("newPassword", "newUsername", "newFirstName", "newLastName")
+    new_password, = utils.validate_json("newPassword")
 
-    # Csekk hogy használatban van-e a username
-    existing_user = User.query.filter_by(username=new_username).first()
-    if existing_user is not None:
-        abort(400, "a felhasználónév már foglalt")
-
-    print("New password:", new_password + "\n New Name:", new_first_name + " " + new_last_name + "\n New Username:", new_username)
+    print("New password:", new_password)
 
     new_password_hash = utils.salted_hash(new_password, user.password_salt)
  
     user.password_hash = new_password_hash
     db.session.commit()
 
-    return success_response("data changed successfully")
+    return success_response("password changed successfully")
 
+
+@app.route("/api/change-username", methods=["PATCH"])
+def json_change_username():
+
+    """
+    Bejelentkezett felhasználó felhasználónevének módosítása
+    """
+
+    session, user = utils.auth_session()
+    new_username, = utils.validate_json("newUsername")
+
+    # Csekk hogy használatban van-e a username
+    existing_user = User.query.filter_by(username=new_username).first()
+    if existing_user is not None:
+        abort(400, "a felhasználónév már foglalt")
+
+    print("New Username:", new_username)
+
+    user.username = new_username
+    db.session.commit()
+
+    return success_response("username changed successfully")
+
+
+@app.route("/api/change-data", methods=["PATCH"])
+def json_change_data():
+
+    """
+    Bejelentkezett felhasználó adatainak módosítása
+    """
+
+    session, user = utils.auth_session()
+    new_first_name, new_last_name = utils.validate_json("newFirstName", "newLastName")
+
+
+    print("New name:", new_first_name + " " + new_last_name)
+
+    user.first_name = new_first_name
+    user.last_name = new_last_name
+    db.session.commit()
+
+    return success_response("data changed successfully")
