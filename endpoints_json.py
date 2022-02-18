@@ -8,7 +8,7 @@ from flask import abort
 import utils
 import requests
 from time import time
-from schemas import success_response, todo_shema
+from schemas import success_response, todo_shema, user_schema
 import config
 
 
@@ -217,7 +217,28 @@ def json_get_todos():
     # így is lehet használni: map(todo_shema, todos)
 
 
-@app.route("/api/change-data", methods=["POST"])
+
+
+
+@app.route("/api/profile-data", methods=["GET"])
+def json_profile_data():
+    session, user = utils.auth_session()
+
+    user_element = User(
+        id = user.id,
+        username=user.username,
+        email=user.email,
+        first_name=user.first_name,
+        last_name=user.last_name,
+        gender=user.gender,
+        register_date=user.register_date
+    )
+
+    return success_response(user_schema(user_element))
+
+    
+
+@app.route("/api/change-data", methods=["PATCH"])
 def json_change_password():
     session, user = utils.auth_session()
     new_password, new_username, new_first_name, new_last_name, = utils.validate_json("newPassword", "newUsername", "newFirstName", "newLastName")
