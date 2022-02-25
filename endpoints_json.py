@@ -1,15 +1,12 @@
-from crypt import methods
-from ctypes import util
-from urllib import response
-from flask import request, make_response, render_template
-from startup import app, db
-from models import User, Session, Todo
-from flask import abort
-import utils
+from flask import request, make_response, abort
 import requests
 from time import time
 from schemas import success_response, todo_shema, user_schema
 import config
+
+import utils
+from models import User, Session, Todo
+from startup import app, db
 
 
 
