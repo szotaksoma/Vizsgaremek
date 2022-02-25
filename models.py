@@ -13,18 +13,8 @@ class User(db.Model):
     register_date = db.Column(BIGINT, nullable=False)
     first_name = db.Column(VARCHAR(128), nullable=False)
     last_name = db.Column(VARCHAR(128), nullable=False)
-    gender = db.Column(INTEGER, nullable=False)
     password_reset_token = db.Column(CHAR(64), nullable=True)
     email_verification_token = db.Column(CHAR(64), nullable=True)
-
-
-class Mission(db.Model):
-    id = db.Column(INTEGER, primary_key=True, autoincrement=True)
-    user_id = db.Column(INTEGER, ForeignKey(User.id), nullable=False)
-    user: User = RelationshipProperty(User, foreign_keys=[user_id])
-    mission = db.Column(VARCHAR(200))
-    creation_date = db.Column(BIGINT)
-    end_date = db.Column(BIGINT)
 
 
 class Category(db.Model):

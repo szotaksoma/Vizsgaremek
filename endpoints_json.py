@@ -22,8 +22,8 @@ def json_register():
     """
 
 
-    email, username, password, first_name, last_name, gender = utils.validate_json(
-        "email", "username", "password", "firstName", "lastName", "gender"
+    email, username, password, first_name, last_name = utils.validate_json(
+        "email", "username", "password", "firstName", "lastName"
     )
 
     # Csekk hogy használatban van-e az e-mail
@@ -50,7 +50,6 @@ def json_register():
         password_salt=salt,
         first_name=first_name,
         last_name=last_name,
-        gender=gender,
         email_verification_token=email_verification_token,
     )
 
@@ -261,7 +260,6 @@ def json_profile_data():
         email=user.email,
         first_name=user.first_name,
         last_name=user.last_name,
-        gender=user.gender,
         register_date=user.register_date
     )
 
