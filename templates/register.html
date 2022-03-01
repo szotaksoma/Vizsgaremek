@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <title>Regisztráció</title>
 </head>
 <body>
@@ -18,19 +19,21 @@
                     <input type="text" name="vezeteknev" id="keresztnev-input" placeholder="Keresztnév"><br>
                     <input type="email" name="email" id="email-input" placeholder="E-mail-cím"><br>
                     <input type="text" name="felhasznalo" id="felhasznalo-input" placeholder="Felhasználónév"><br>
-                    <input type="password" name="jelszo" id="jelszo-input" placeholder="Jelszó"><br>
+                    <input type="password" name="jelszo" id="jelszo-input" placeholder="Jelszó" onkeyup="jelszoErosseg()"><i class="far fa-eye" id="togglePassword"></i><br>
+                    <div id="jelszo-erosseg"></div>
                     <input type="password" name="jelszo-megint" id="jelszo-megint-input" placeholder="Jelszó mégegyszer"><br>
+                    <span id="szuletes-span">Születési dátum</span>
                     <input type="date" name="szuletes" id="szuletes-input"><br>
                 </form>
-                <button name="regisztracio" id="regisztracio-gomb">Regisztráció</button>
+                <button name="regisztracio" id="regisztracio-gomb" onclick="validate()">Regisztráció</button>
             </div>
         </div>
         <div class="belepes-link">
             <p>Már van fiókja?</p>
-            <p id="link-szoveg">Lépjen be <a href="#">itt</a>!</p>
+            <p id="link-szoveg">Lépjen be <a href="login.html">itt</a>!</p>
         </div>
-
     </div>
+    <script src="js/register.js"></script>
     
 </body>
 </html>

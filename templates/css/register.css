@@ -71,16 +71,33 @@ input:focus {
     margin-left: 2rem;
     width: 21.2rem;
 }
+#togglePassword{
+    position: absolute;
+    margin-left: -2.2rem;
+    margin-top: 1.75rem;
+    color: #3751FE;
+    cursor: pointer;
+}
+#togglePassword:hover{
+    color: #3a54fad0;
+    transition-duration: 0.4s;
+}
 #jelszo-megint-input{
     margin-left: 2rem;
+    margin-top: 0.6rem;
     width: 21.2rem;
 }
 #szuletes-input{
-    margin-left: 2rem;
+    margin-left: 0.8rem;
     width: 11rem;
     padding-left: 0.8rem;
     color: #4d4d4d;
     padding-inline-start: 1.4rem;
+}
+#szuletes-span{
+    margin-left: 4.4rem;
+    color: #2e2e2e;
+    font-size: 0.9rem;
 }
 
 #regisztracio-gomb{
@@ -132,4 +149,11 @@ a:hover{
     left: 3.8rem;
     top: 3.8rem;
     width: 7rem;
+}
+#jelszo-erosseg{
+    height: 0.2rem;
+    border-radius: 5px;
+    margin-left: 2.7rem;
+    margin-top: 0.3rem;
+    max-width: 21.5rem;
 }
