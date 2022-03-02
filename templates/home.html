@@ -4,12 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/home.css">
     <title>TickOff</title>
 </head>
 <body>
-    <h1>Be van jelentkezve</h1>
-    <form>
-        <button type="button">Kijelentkezés</button>
-    </form>
+    <div class="side">
+        <img src="img/logo.png" alt="logo" id="logo">
+        <div class="navigation">
+            <form>
+                <button type="button" id="kezdolap"><img src="img/kezdolap.png" id="kezdolap-icon">Kezdőlap</button><br>
+                <button type="button" id="feladatok"><img src="img/feladatok.png" id="feladatok-icon">Feladatok</button><br>
+                <button type="button" id="csillagozott"><img src="img/csillag.png" id="csillag-icon">Csillagozott</button><br>
+                <button type="button" id="kesz"><img src="img/kesz.png" id="kesz-icon">Kész</button><br>
+                <button type="button" id="halasztott"><img src="img/halasztott.png" id="halasztott-icon">Halasztott</button><br>
+            </form>
+        </div>
+        <div class="navigation-bottom">
+            <button type="button" id="beallitasok"><img src="img/beallitas.svg" id="kesz-icon">beállítások</button><br>
+            <button type="button" id="kijelentkezes"><img src="img/kijelentkezes.svg" id="halasztott-icon">Kijelentkezés</button><br>
+        </div>
+    </div>
+    <div class="navbar">
+        <input type="text" name="kereses" id="kereses" placeholder="Keresés"><img src="img/kereses-icon.svg" alt="kereses" id="kereses-icon">
+        <hr id="top-vonal">
+    </div>
 </body>
 </html>

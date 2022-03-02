@@ -125,6 +125,7 @@ def json_login():
     db.session.add(session)
     db.session.commit()
 
+
     response = make_response(success_response("logged in successfully"))
     cookie_max_age = None
     response.set_cookie(
@@ -133,6 +134,7 @@ def json_login():
         max_age=cookie_max_age,
         secure=False,
     )
+
 
     return response
 
