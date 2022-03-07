@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo Fetch demo</title>
+    <script defer src="register.js"></script>
+    <style>
+        .form {
+            display: flex;
+            flex-direction: column;
+            width: 200px;
+        }
+
+        input {
+            margin-bottom: 20px;
+        }
+
+        .button {
+            color: white;
+            font-weight: 700;
+            background-color: #2183DB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            user-select: none;
+            cursor: pointer;
+            transition: opacity 200ms ease-in-out;
+            padding: 10px;
+        }
+
+        .button:hover {
+            opacity: 0.8;
+        }
+
+        .button:active {
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="form">
+        <input id="reg-form-email" type="email" placeholder="Email cím" required>
+        <input id="reg-form-username" type="text" placeholder="Felhasználónév" required>
+        <input id="reg-form-password" type="password" placeholder="Jelszó" required>
+        <input id="reg-form-lastName" type="text" placeholder="Vezetéknév" required>
+        <input id="reg-form-firstName" type="text" placeholder="Keresztnév" required>
+        <div class="button" onclick="register()">Regisztráció</div>
+    </div>
+</body>
+</html>

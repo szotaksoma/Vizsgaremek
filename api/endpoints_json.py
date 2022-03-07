@@ -18,7 +18,6 @@ def json_register():
     Új felhasználó regisztrálása
     """
 
-
     email, username, password, first_name, last_name = utils.validate_json(
         "email", "username", "password", "firstName", "lastName"
     )
@@ -252,17 +251,7 @@ def json_get_todos():
 @app.route("/api/profile-data", methods=["GET"])
 def json_profile_data():
     session, user = utils.auth_session()
-
-    user_element = User(
-        id = user.id,
-        username=user.username,
-        email=user.email,
-        first_name=user.first_name,
-        last_name=user.last_name,
-        register_date=user.register_date
-    )
-
-    return success_response(user_schema(user_element))
+    return success_response(user_schema(user))
 
 
 
